@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Админ панель</title>
+	<link rel="stylesheet" type="text/css" href="../css/styleadmin.css">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img src="https://наэт.рф/templates/tehnikum_jslab/img/logo.png">
+		</div>
+		<a>Админ панель</a>
+		<div class="exit">
+			<button>Выход</button>
+		</div>
+	</header>
+	<div class="side-bar">
+		<button>Студенты</button>
+	</div>
+	<div class="main">
+		<table>
+			<tr>
+				<th>Фамилия</th>
+				<th>Имя</th>
+				<th>Отчество</th>
+				<th>№ Студ</th>
+				<th>Категория</th>
+				<th>Завтрак</th>
+				<th>Обед</th>
+				<th style="width: 40px; color: white;">O</th>
+				<th style="width: 40px; color: red;">X</th>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<div class="osn">
+			<div class="blue">Форма для добавления</div>
+			<form action="" method="post">
+				<div class="inp">
+					<div class="i">Фамилия<br><input type="text" name="f" required></div>
+					<div class="i">Имя<br><input type="text" name="i" required></div>
+					<div class="i">Отчество<br><input type="text" name="o" required></div>
+					<div class="i">№ Студ<br><input type="text" name="num" required></div>
+					<div class="i">Категория<br><input type="text" name="kat" required></div>
+					<div class="i">Завтрак<br><input type="checkbox" name="zav" required></div>
+					<div class="i">Обед<br><input type="checkbox" name="obed" required></div>
+				</div>
+				<button type="submit">Добавить</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: sans-serif; 
+}	
+
+/*#c5c4c4 серый фон 
+snow заместо white*/
+body{
+	background: snow;
+}
+
+header{
+	height: 100px;
+	width: 100%;
+	background: #3c8bff;
+	display:grid;
+	grid-template-columns:300px auto 300px;
+}
+.logo{
+	background: #3c8bff;
+	z-index: 1;
+	height: 100px;
+	display: grid;
+	justify-items: center;
+}
+header a{
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	font-size: 50px;
+	color: white;
+	font-family: sans-serif;
+}
+header .exit{
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	background: #3c8bff;
+}
+header button{
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+	background: white;
+	border-radius: 5px;
+}
+.side-bar{
+	position: absolute;
+	display: grid;
+	justify-items: center;
+	background: #3c8bff;
+	width: 300px;
+	height: 100%;
+	padding-top: 40px;
+	box-sizing: border-box;
+}
+.side-bar button{
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	background: white;
+	border-radius: 5px;
+}
+.main{
+	margin-left: 300px;
+	display: grid;
+	justify-items: center;
+	box-sizing: border-box;
+	padding-top: 100px;
+	margin-right: 300px;
+	background: snow;
+
+}
+.main table{
+	width: 90%;
+	margin-bottom: 100px;
+	background: #3c8bff;
+	box-shadow:  0px 0px 20px #000;
+}
+table th{
+	box-sizing: border-box;
+	height: 30px;
+	background: #3c8bff;
+	color: white;
+	width: 260px;
+}
+table td{
+	box-sizing: border-box;
+	height: 30px;
+	background: white;
+	color: black;
+}
+.osn{
+	width: 90%;
+	margin-bottom: 100px;
+	background: #3c8bff;
+	color: white;
+	box-shadow:  0px 0px 20px #000;
+}
+.blue{
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	background: #3c8bff;
+	height: 50px;
+	font-size: 30px;
+}
+.inp{
+	background: #3c8bff;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+}
+.inp .i{
+	box-sizing: border-box;
+	border: 2px solid;
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	height: 70px;
+}
+.i input{
+	margin-top: -10px;
+	height: 20px;
+	width: 140px;
+	box-sizing: border-box;
+	padding: 4px;
+}
+.osn button{
+	float: right;
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	background: white;
+	border-radius: 5px;
+	margin: 10px 10px 10px 0px ;
+}
+.change{
+	width: 1130px;
+	height: 170px;
+	box-sizing: border-box;
+	margin: auto;
+	position: absolute;
+	left: 50%;
+	margin-left: -565px;
+	top: 50%;
+	margin-top: -285px;
+  	background: #3c8bff;
+  	box-shadow: 0px 0px 20px #000;
+}
+.change .osn{
+	width: 100%;
+	box-shadow: none;
+
+}
