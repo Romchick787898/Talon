@@ -1,156 +1,118 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url(../fonts/Gilroy-Regular.ttf);
+}
+
 *{
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-family: sans-serif; 
+	font-family: 'Gilroy'; 
 }	
 
-/*#c5c4c4 серый фон 
-snow заместо white*/
 body{
-	background: snow;
+	background: whitesmoke;
 }
 
 header{
-	height: 100px;
+	height: 57px;
 	width: 100%;
 	background: #3c8bff;
-	display:grid;
-	grid-template-columns:300px auto 300px;
+	display:flex;
+	justify-content: center;
+  color: white;
 }
-.logo{
-	background: #3c8bff;
-	z-index: 1;
-	height: 100px;
-	display: grid;
-	justify-items: center;
+
+.content_header{
+  display: flex;
+  width: 1200px;
+  justify-content: space-between;
+  align-items: center;
 }
-header a{
-	display: grid;
-	justify-items: center;
-	align-items: center;
-	font-size: 50px;
-	color: white;
-	font-family: sans-serif;
+
+h1{
+  font-size: 25px;
 }
-header .exit{
-	display: grid;
-	justify-items: center;
-	align-items: center;
-	background: #3c8bff;
-}
+
 header button{
-	width: 100px;
-	height: 40px;
-	font-size: 20px;
+	width: 110px;
+	height: 25px;
+	font-size: 16px;
 	background: white;
 	border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
+
+header button:hover{
+  background: rgb(238, 237, 237);
+}
+
+.container{
+  width: 100%;
+  display: flex;
+}
+
 .side-bar{
-	position: absolute;
-	display: grid;
-	justify-items: center;
-	background: #3c8bff;
 	width: 300px;
 	height: 100%;
-	padding-top: 40px;
-	box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  border-right: 1px solid #ececec;
+  min-height: calc(100vh - 57px);
 }
-.side-bar button{
-	width: 100px;
-	height: 30px;
-	font-size: 20px;
-	background: white;
-	border-radius: 5px;
-}
-.main{
-	margin-left: 300px;
-	display: grid;
-	justify-items: center;
-	box-sizing: border-box;
-	padding-top: 100px;
-	margin-right: 300px;
-	background: snow;
 
+.container_side-bar{
+  width: 100%;
+  margin-top: 40px;
 }
-.main table{
-	width: 90%;
-	margin-bottom: 100px;
-	background: #3c8bff;
-	box-shadow:  0px 0px 20px #000;
-}
-table th{
-	box-sizing: border-box;
-	height: 30px;
-	background: #3c8bff;
-	color: white;
-	width: 260px;
-}
-table td{
-	box-sizing: border-box;
-	height: 30px;
-	background: white;
-	color: black;
-}
-.osn{
-	width: 90%;
-	margin-bottom: 100px;
-	background: #3c8bff;
-	color: white;
-	box-shadow:  0px 0px 20px #000;
-}
-.blue{
-	display: grid;
-	justify-items: center;
-	align-items: center;
-	background: #3c8bff;
-	height: 50px;
-	font-size: 30px;
-}
-.inp{
-	background: #3c8bff;
-	display: grid;
-	grid-template-columns: repeat(7, 1fr);
-}
-.inp .i{
-	box-sizing: border-box;
-	border: 2px solid;
-	display: grid;
-	justify-items: center;
-	align-items: center;
-	height: 70px;
-}
-.i input{
-	margin-top: -10px;
-	height: 20px;
-	width: 140px;
-	box-sizing: border-box;
-	padding: 4px;
-}
-.osn button{
-	float: right;
-	width: 100px;
-	height: 30px;
-	font-size: 20px;
-	background: white;
-	border-radius: 5px;
-	margin: 10px 10px 10px 0px ;
-}
-.change{
-	width: 1130px;
-	height: 170px;
-	box-sizing: border-box;
-	margin: auto;
-	position: absolute;
-	left: 50%;
-	margin-left: -565px;
-	top: 50%;
-	margin-top: -285px;
-  	background: #3c8bff;
-  	box-shadow: 0px 0px 20px #000;
-}
-.change .osn{
+
+.side-bar a{
+  margin-top: 15px;
 	width: 100%;
-	box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	height: 30px;
+	font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #1a1a1a;
+}
 
+.side-bar a:hover{
+  color: #1a1a1a6c;
+}
+
+.main{
+  min-height: calc(100vh - 57px);
+	background: white;
+  width: 100%;
+}
+
+.main table{
+	width: 1200px;
+	margin-top: 50px;
+  margin-left: 103px;
+  border-radius: 5px;
+  text-align: center;
+  vertical-align: middle;
+  box-shadow: 0px 0px 50px rgb(0 0 0 / 15%);
+}
+
+table th{
+	height: 30px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.425);
+}
+
+table td{
+  padding: 5px;
+  border-radius: 5px;
+  min-height: 30px;
+  border: 1px solid rgba(0,0,0,.15);
+}
+
+.two{
+  background: rgb(238, 237, 237);
 }
