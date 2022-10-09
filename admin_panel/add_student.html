@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/styleadmin.css">
+  <title>Добавить студента</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="admin.html">Студенты</a>
+        <a href="add_student.html"><span style="color: #3c8bff; margin-right: 3px;">></span>Добавить студента</a>
+      </div>
+    </div>
+    <div class="main">
+      <h2 style="
+        position: absolute; 
+        margin-top: 55px; 
+        margin-left: 103px;
+      ">
+        <span style="color: #3c8bff;">></span> Добавить студента:
+      </h2>
+      <form action="post" class="form_add_student">
+        Фамилия:
+        <input type="text">
+        Имя:
+        <input type="text">
+        Отчество:
+        <input type="text">
+        № Студ:
+        <input type="number" min="0">
+        Категория:
+        <input type="text">
+        Завтрак: <span class="change" id="breakfast" onclick="Yes_and_no(id)">Изменить</span>
+        <ul class="yes_no" id="breakfast">
+          <li id="yes" onclick="Yes_no(event, id)">Да</li>
+          <li id="no" onclick="Yes_no(event, id)">Нет</li>
+        </ul>
+        Обед: <span class="change" id="lunch" onclick="Yes_and_no(id)">Изменить</span>
+        <ul class="yes_no" id="lunch">
+          <li id="yes" onclick="Yes_no(event, id)">Да</li>
+          <li id="no" onclick="Yes_no(event, id)">Нет</li>
+        </ul>
+        <button class="add_btn">Добавить</button>
+      </form>
+    </div>
+  </div>
+  <script src="../js/add_student.js"></script>
+</body>
+</html>

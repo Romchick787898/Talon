@@ -15,37 +15,43 @@
   <div class="container">
     <div class="side-bar">
       <div class="container_side-bar">
-        <a>Студенты</a>
-        <a>Добавить студента</a>
+        <a href="admin.html"><span style="color:#3c8bff; margin-right: 3px;">></span>Студенты</a>
+        <a href="add_student.html">Добавить студента</a>
       </div>
     </div>
     <div class="main">
+      <div class="container_table">
       <table>
         <tr>
+          <th></th>
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
           <th>№ Студ</th>
-          <th>Категория</th>
-          <th>Завтрак</th>
-          <th>Обед</th>
-          <th style="color: rgb(2, 161, 2)">Изменить</th>
-          <th style="color: red;">Удалить</th>
         </tr>
         <tr>
+          <td><div class="checkbox" onclick="Check(event)"></div></td>
           <td>Северов</td>
           <td>Роман</td>
           <td>Павлович</td>
           <td>100</td>
-          <td>Обычная</td>
-          <td>Нет</td>
-          <td>Да</td>
-          <td>Изменить</td>
-          <td>Удалить</td>
+        </tr>
+        <tr>
+          <td><div class="checkbox" onclick="Check(event)"></div></td>
+          <td>Северов</td>
+          <td>Роман</td>
+          <td>Павлович</td>
+          <td>100</td>
         </tr>
       </table>
+      </div>
+      <div class="menu">
+        <button class="btn_view">Просмотр</button>
+        <button class="btn_change">Изменить</button>
+        <button class="btn_delete">Удалить</button>
+      </div>
     </div>
   </div>
-  <!-- <script src="../js/get_all_students.js"></script> -->
+  <script src="../js/get_all_students.js"></script>
 </body>
 </html>
