@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Изменить группу</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a>
+        <a href="/category">Категории</a>
+        <a href="/benefits">Льготы</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <form action="/talon.js" class="form_add_student" id="form_edit_group">
+        <h2 style=" 
+          margin-bottom: 50px;
+        ">
+        <span style="color: #3c8bff;">></span> Изменить группу:
+        </h2>
+        <input type="hidden" value="{{group.id_group}}" name="id_group">
+        Номер группы:
+        <input type="text" value="{{group.name_group}}" name="name_group">
+        Название группы:
+        <input type="text" value="{{group.description_group}}" name="description_group">
+        <button class="add_btn">Изменить</button>
+      </form>
+    </div>
+  </div>
+  <script src="/code_edit_group.js"></script>
+</body>
+</html>

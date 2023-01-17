@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Студенты</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a>
+        <a href="/category">Категории</a>
+        <a href="/benefits">Льготы</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="container_table">
+        <table id="table_for_all">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Фамилия</th>
+              <th>Имя</th>
+              <th>Отчество</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each students}}
+              <tr id="{{this.id_student}}">
+                <td>{{this.id_student}}</td>
+                <td>{{this.middleName}}</td>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="menu_for_add_delete_edit">
+        <button onclick="Delete_student(event)" id="delete_btn">Удалить</button>
+        <button onclick="Edit_student(event)" id="edit_btn">Изменить</button>
+        <button onclick="document.location.href = '/form_add_student?id_group={{group}}'">Добавить</button>
+      </div>
+    </div>
+  </div>
+  <script src="/code_for_students.js"></script>
+  <script src="/create_table.js"></script>
+</body>
+</html>

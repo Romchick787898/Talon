@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Добавить студента</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a>
+        <a href="/category">Категории</a>
+        <a href="/benefits">Льготы</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <form class="form_add_student" id="form_add_group">
+        <h2 style=" 
+          margin-bottom: 50px;
+        ">
+        <span style="color: #3c8bff;">></span> Добавить группу:
+        </h2>
+        Номер группы:
+        <input type="text" name="name_group">
+        Название группы:
+        <input type="text" name="description_group">
+        <button class="add_btn" type="submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+  <script src="/code_add_groups.js"></script>
+</body>
+</html>

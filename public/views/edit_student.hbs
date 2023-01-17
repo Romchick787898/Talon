@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Изменить студента</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Студенты</a>
+        <a href="/category">Категории</a>
+        <a href="/benefits">Льготы</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <form class="form_add_student" id="form_edit_students">
+        <h2 style=" 
+          margin-bottom: 50px;
+        ">
+        <span style="color: #3c8bff;">></span> Изменить студента:
+        </h2>
+        Фамилия:
+        <input type="text" name="middleName" value="{{student.middleName}}">
+        Имя:
+        <input type="text" name="firstName" value="{{student.firstName}}">
+        Отчество:
+        <input type="text" name="lastName" value="{{student.lastName}}">
+        № Студ:
+        <input type="number" min="1" name="id_student" value="{{student.id_student}}">
+        <button class="add_btn">Изменить</button>
+      </form>
+    </div>
+  </div>
+  <script src="/code_edit_students.js"></script>
+</body>
+</html>

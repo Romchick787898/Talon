@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>Группы</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a>
+        <a href="/category">Категории</a>
+        <a href="/benefits">Льготы</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="container_table">
+        <table id="table_for_all">
+          <thead>
+            <tr>
+              <th>Номер группы</th>
+              <th>Название группы</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each groups}}
+              <tr id="{{this.id_group}}">
+                <td>{{this.name_group}}</td>
+                <td>{{this.description_group}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="menu_for_add_delete_edit">
+        <button onclick="Delete_group(event)" id="delete_btn">Удалить</button>
+        <button onclick="Edit_group(event)" id="edit_btn">Изменить</button>
+        <button onclick="document.location.href = '/form_add_group'">Добавить</button>
+        <button onclick="View_group(event)" id="view_btn">Просмотреть</button>
+      </div>
+    </div>
+  </div>
+  <script src="/create_table.js"></script>
+</body>
+</html>
