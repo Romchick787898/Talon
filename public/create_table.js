@@ -42,3 +42,28 @@ function View_group(event){
   let id_group = event.target.getAttribute("data-id_tr");
   document.location.href = "/students/" + id_group;
 }
+
+function Delete_category(event){
+  let id_category = event.target.getAttribute("data-id_tr");
+  document.location.href = "/delete_category/" + id_category;
+}
+
+function Edit_category(event){  
+  let id_category = event.target.getAttribute("data-id_tr");
+  document.location.href = "/form_edit_category/" + id_category;
+}
+
+function View_category(event){  
+  let id_category = event.target.getAttribute("data-id_tr");
+  document.location.href = "/benefits/" + id_category;
+}
+
+function Delete_benefits(event){
+  let id_benefits = event.target.getAttribute("data-id_tr");
+  document.location.href = "/delete_benefits/" + id_benefits;
+}
+
+function Edit_benefits(event){  
+  let id_benefits = event.target.getAttribute("data-id_tr");
+  document.location.href = "/form_edit_benefits/" + id_benefits;
+}

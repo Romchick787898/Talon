@@ -316,33 +316,185 @@ app.get("/delete_student/:id", (req, response)=> {
   });
 })
 
-/*  */
+/* Льготы */
 
-app.get("/benefits", (req, response) =>{
-  const sql_find_benefits = "SELECT * FROM benefits";
+app.get("/benefits/:id", (req, response) =>{
 
-  connection.query(sql_find_benefits, (err, data) =>{
+  const id_category = req.params.id;
+
+  const sql_find_benefits = "SELECT category_benefits.id_benefits, benefits.name_ben, benefits.first_time, benefits.last_time, benefits.cost, benefits.data_begin, benefits.data_end FROM category_benefits, benefits WHERE category_benefits.id_benefits = benefits.id_benefits AND category_benefits.id_category = ?";
+
+  connection.query(sql_find_benefits, id_category, (err, data) =>{
     if(err){ 
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
-      console.log(data);
-      return response.status(200).json({ message: data });
+      
+      data.forEach(item =>{
+        let date = new Date(item.data_begin);
+        item.data_begin = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        let date2 = new Date(item.data_end);
+        item.data_end = `${date2.getFullYear()}-${date2.getMonth()+1}-${date2.getDate()} ${date2.getHours()}:${date2.getMinutes()}:${date2.getSeconds()}`;
+      });
+
+      response.render("benefits.hbs", { 
+        benefits: data,
+        category: id_category
+      });
     }
   });
 })
 
-app.get("/category", (req, response) =>{
+app.get("/form_add_benefits/:id", (req, response) =>{
+  const id_category = req.params.id;
+  response.render("add_benefits.hbs", { 
+    category: id_category
+  });
+})
 
-  const sql_find_users = "SELECT * FROM category";
+app.post("/form_add_benefits", upload.none(), (req, response) =>{
+  const sql_add_benefits = "INSERT INTO benefits (name_ben, first_time, last_time, data_begin, data_end, cost) VALUES(?, ?, ?, ?, ?, ?)";
 
-  connection.query(sql_find_users, (err, data) =>{
+  const sql_find_id_benefits = "SELECT * FROM benefits WHERE name_ben=?";
+
+  const sql_add_category_benefits = "INSERT INTO category_benefits (id_category, id_benefits) VALUES(?, ?)";
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+
+  const obj_data = req.body;
+
+  let id_benefits; 
+  let id_category = obj_data.id_category;
+
+  const data_value = [
+    obj_data.name_ben,
+    obj_data.first_time,
+    obj_data.last_time,
+    obj_data.data_begin,
+    obj_data.data_end,
+    obj_data.cost
+  ];
+
+  console.log("Я отработал_2", data_value);
+
+  connection.query(sql_add_benefits, data_value, (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }else{
+      console.log("Льгота добавлена в льготы");
+    }
+  });
+
+  connection.query(sql_find_id_benefits, obj_data.name_ben, (err, data) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }
+    console.log("Нашел льготу", data[0].id_benefits);
+    console.log(data[0]);
+    id_benefits = data[0].id_benefits;
+    connection.query(sql_add_category_benefits, [id_category, id_benefits], (err, res) =>{
+      if(err){
+        console.log(err);
+        return response.status(400).json({ message: "Ошибка с БД" });
+      }
+      response.status(200).json({ message: "Льгота добавлена" });
+    });  
+  });
+})
+
+app.get("/form_edit_benefits/:id", (req, response) =>{
+  const true_role = ["ADMIN"];
+  const id_benefits = req.params.id;
+  const sql_find_benefits = "SELECT * FROM benefits WHERE id_benefits=?";
+  /* const token = req.headers.authorization.split(" ")[1];
+  
+  if(token == "null"){
+    return response.status(400).json({ message: "Пользователь не авторизован" });
+  }
+
+  const { roles } = jwt.verify(token, secret);
+  let has_role = false;
+
+  if(true_role.includes(roles)){
+    has_role = true;
+  }
+
+  if(!has_role){
+    return response.status(400).json({ message: "У вас нет доступа" });
+  }  */
+
+  connection.query(sql_find_benefits, [id_benefits], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+
+      data.forEach(item =>{
+        let date = new Date(item.data_begin);
+        item.data_begin = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        let date2 = new Date(item.data_end);
+        item.data_end = `${date2.getFullYear()}-${date2.getMonth()+1}-${date2.getDate()} ${date2.getHours()}:${date2.getMinutes()}:${date2.getSeconds()}`;
+      });
+
+      response.render("edit_benefits.hbs", { 
+        benefits: data[0]
+      });
+    }
+  });
+})
+
+app.post("/form_edit_benefits", upload.none(), (req, response) =>{
+
+  const obj_data = req.body;
+
+  const sql_update_benefits = "UPDATE benefits SET name_ben=?, first_time=?, last_time=?, data_begin=?, data_end=?, cost=? WHERE id_benefits=?";
+
+  console.log(obj_data);
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+  connection.query(
+    sql_update_benefits, 
+    [
+      obj_data.name_ben, 
+      obj_data.first_time, 
+      obj_data.last_time, 
+      obj_data.data_begin,
+      obj_data.data_end,
+      obj_data.cost,
+      obj_data.id_benefits
+    ], 
+    (err, data) =>{
     if(err){ 
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
       console.log(data);
-      return response.status(200).json({ message: data });
+      return response.status(200).json({ message: "Изменено" });
+    }
+  });
+})
+
+/*   */
+
+app.get("/category", (req, response) =>{
+
+  const sql_find_category = "SELECT * FROM category";
+
+  connection.query(sql_find_category, (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      response.render("category.hbs", { 
+        category: data
+      });
     }
   });
 })

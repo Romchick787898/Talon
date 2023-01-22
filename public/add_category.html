@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
-  <title>Изменить группу</title>
+  <title>Добавить категорию</title>
 </head>
 <body>
   <header>
@@ -23,21 +23,20 @@
       </div>
     </div>
     <div class="main">
-      <form action="/talon.js" class="form_add_student" id="form_edit_group">
+      <form class="form_add_student" id="form_add_group">
         <h2 style=" 
           margin-bottom: 50px;
         ">
-        <span style="color: #3c8bff;">></span> Изменить группу:
+        <span style="color: #3c8bff;">></span> Добавить категорию:
         </h2>
-        <input type="hidden" value="{{group.id_group}}" name="id_group">
-        Номер группы:
-        <input type="text" value="{{group.name_group}}" name="name_group">
+        Название категории:
+        <input type="text" name="name_group">
         Название группы:
-        <input type="text" value="{{group.description_group}}" name="description_group">
-        <button class="add_btn">Изменить</button>
+        <input type="text" name="description_group">
+        <button class="add_btn" type="submit">Добавить</button>
       </form>
     </div>
   </div>
-  <script src="/code_edit_group.js"></script>
+  <script src="/code_add_category.js"></script>
 </body>
 </html>

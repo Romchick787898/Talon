@@ -141,6 +141,10 @@ table tr{
   cursor: pointer;
 }
 
+table tr:nth-child(even){
+  background: whitesmoke;
+}
+
 table tr.active_tr > td{
   border: 1px solid #3c8bff;
 } 

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>Группы</title>
+  <title>Категории</title>
 </head>
 <body>
   <header>
@@ -17,8 +17,8 @@
   <div class="container">
     <div class="side-bar">
       <div class="container_side-bar">
-        <a href="/groups"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a>
-        <a href="/category">Категории</a>
+        <a href="/groups">Группы</a>
+        <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
         <a href="/report">Отчет</a>
       </div>
     </div>
@@ -27,25 +27,25 @@
         <table id="table_for_all">
           <thead>
             <tr>
-              <th>Номер группы</th>
-              <th>Название группы</th>
+              <th>Название категории</th>
+              <th>Ранг категории</th>
             </tr>
           </thead>
           <tbody>
-            {{#each groups}}
-              <tr id="{{this.id_group}}">
-                <td>{{this.name_group}}</td>
-                <td>{{this.description_group}}</td>
+            {{#each category}}
+              <tr id="{{this.id_category}}">
+                <td>{{this.name_cat}}</td>
+                <td>{{this.rank}}</td>
               </tr>
             {{/each}}
           </tbody>
         </table>
       </div>
       <div class="menu_for_add_delete_edit">
-        <button onclick="Delete_group(event)" id="delete_btn">Удалить</button>
-        <button onclick="Edit_group(event)" id="edit_btn">Изменить</button>
-        <button onclick="document.location.href = '/form_add_group'">Добавить</button>
-        <button onclick="View_group(event)" id="view_btn">Просмотреть</button>
+        <button onclick="Delete_category(event)" id="delete_btn">Удалить</button>
+        <button onclick="Edit_category(event)" id="edit_btn">Изменить</button>
+        <button onclick="document.location.href = '/form_add_category'">Добавить</button>
+        <button onclick="View_category(event)" id="view_btn">Просмотреть</button>
       </div>
     </div>
   </div>

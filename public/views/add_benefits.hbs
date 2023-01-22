@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Добавить льготу</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students">Группы</a>
+        <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <form class="form_add_student" id="form_add_benefits">
+        <h2 style=" 
+          margin-bottom: 50px;
+        ">
+        <span style="color: #3c8bff;">></span> Добавить льготу:
+        </h2>
+        <input type="hidden" value="{{category}}" name="id_category">
+        Название льготы:
+        <input type="text" name="name_ben">
+        Время начала действия льготы в течениее дня:
+        <input type="text" name="first_time">
+        Время конца действия льготы в течениее дня:
+        <input type="text" name="last_time">
+        Дата начала действия льготы:
+        <input type="text" name="data_begin">
+        Дата конца действия льготы:
+        <input type="text" name="data_end">
+        Цена льготы:
+        <input type="number" name="cost">
+        <button class="add_btn" type="submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+  <script src="/code_add_benefits.js"></script>
+</body>
+</html>

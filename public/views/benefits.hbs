@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Студенты</title>
+</head>
+<body>
+  <header>
+    <div class="content_header">
+      <h1>Талон</h1>
+        <button>Выход</button>
+    </div>
+	</header>
+  <div class="container">
+    <div class="side-bar">
+      <div class="container_side-bar">
+        <a href="/students">Группы</a>
+        <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
+        <a href="/report">Отчет</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="container_table">
+        <table id="table_for_all">
+          <thead>
+            <tr>
+              <th>Название льготы</th>
+              <th>Время начала действия льготы</th>
+              <th>Время окончания действия льготы</th>
+              <th>Стоимость</th>
+              <th>Дата начала действия льготы</th>
+              <th>Дата окончания действия льготы</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each benefits}}
+              <tr id="{{this.id_benefits}}">
+                <td>{{this.name_ben}}</td>
+                <td>{{this.first_time}}</td>
+                <td>{{this.last_time}}</td>
+                <td>{{this.cost}}</td>
+                <td>{{this.data_begin}}</td>
+                <td>{{this.data_end}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="menu_for_add_delete_edit">
+        <button onclick="Delete_benefits(event)" id="delete_btn">Удалить</button>
+        <button onclick="Edit_benefits(event)" id="edit_btn">Изменить</button>
+        <button onclick="document.location.href = '/form_add_benefits/{{category}}'">Добавить</button>
+      </div>
+    </div>
+  </div>
+  <script src="/create_table.js"></script>
+</body>
+</html>
