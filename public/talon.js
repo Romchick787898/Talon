@@ -322,21 +322,16 @@ app.get("/benefits/:id", (req, response) =>{
 
   const id_category = req.params.id;
 
-  const sql_find_benefits = "SELECT category_benefits.id_benefits, benefits.name_ben, benefits.first_time, benefits.last_time, benefits.cost, benefits.data_begin, benefits.data_end FROM category_benefits, benefits WHERE category_benefits.id_benefits = benefits.id_benefits AND category_benefits.id_category = ?";
+  const sql_find_benefits = "SELECT category_benefits.id_benefits, benefits.name_ben, benefits.first_time, benefits.last_time, benefits.cost, DATE_FORMAT(benefits.data_begin, '%Y-%m-%d %H:%i:%S') data_begin, DATE_FORMAT(benefits.data_end, '%Y-%m-%d %H:%i:%S') data_end FROM category_benefits, benefits WHERE category_benefits.id_benefits = benefits.id_benefits AND category_benefits.id_category =?";
+
+/*   "SELECT DATE_FORMAT(benefits.data_end, '%Y-%m-%d %H:%i:%S') FROM benefits" */
 
   connection.query(sql_find_benefits, id_category, (err, data) =>{
     if(err){ 
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
-      
-      data.forEach(item =>{
-        let date = new Date(item.data_begin);
-        item.data_begin = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-        let date2 = new Date(item.data_end);
-        item.data_end = `${date2.getFullYear()}-${date2.getMonth()+1}-${date2.getDate()} ${date2.getHours()}:${date2.getMinutes()}:${date2.getSeconds()}`;
-      });
-
+      console.log(data);
       response.render("benefits.hbs", { 
         benefits: data,
         category: id_category
@@ -409,7 +404,8 @@ app.post("/form_add_benefits", upload.none(), (req, response) =>{
 app.get("/form_edit_benefits/:id", (req, response) =>{
   const true_role = ["ADMIN"];
   const id_benefits = req.params.id;
-  const sql_find_benefits = "SELECT * FROM benefits WHERE id_benefits=?";
+  const sql_find_benefits = "SELECT DATE_FORMAT(data_begin, '%Y-%m-%d %H:%i:%S') data_begin, DATE_FORMAT(data_end, '%Y-%m-%d %H:%i:%S') data_end, id_benefits, name_ben, first_time, last_time, cost FROM benefits WHERE id_benefits=?";
+
   /* const token = req.headers.authorization.split(" ")[1];
   
   if(token == "null"){
@@ -432,14 +428,7 @@ app.get("/form_edit_benefits/:id", (req, response) =>{
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
-
-      data.forEach(item =>{
-        let date = new Date(item.data_begin);
-        item.data_begin = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-        let date2 = new Date(item.data_end);
-        item.data_end = `${date2.getFullYear()}-${date2.getMonth()+1}-${date2.getDate()} ${date2.getHours()}:${date2.getMinutes()}:${date2.getSeconds()}`;
-      });
-
+      console.log(data);
       response.render("edit_benefits.hbs", { 
         benefits: data[0]
       });
@@ -480,7 +469,21 @@ app.post("/form_edit_benefits", upload.none(), (req, response) =>{
   });
 })
 
-/*   */
+app.get("/delete_benefits/:id", (req, response)=> {
+  const id_benefits = req.params.id;
+  const sql_delete_benefits = "DELETE FROM benefits WHERE id_benefits=?";
+
+  connection.query(sql_delete_benefits, [id_benefits], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      response.redirect("/groups");
+    }
+  });
+})
+
+/* Категории */
 
 app.get("/category", (req, response) =>{
 
@@ -498,6 +501,100 @@ app.get("/category", (req, response) =>{
     }
   });
 })
+
+app.get("/form_add_category", (req, response) =>{
+  response.sendFile(__dirname + "/add_category.html");
+})
+
+app.post("/form_add_category", upload.none(), (req, response) =>{
+  const sql_add_category = "INSERT INTO category (name_cat, rank_category) VALUES(?, ?)";
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+
+  const obj_data = req.body;
+
+  const data_value = [
+    obj_data.name_cat,
+    obj_data.rank
+  ];
+
+  console.log("Я отработал_2", data_value);
+
+  connection.query(sql_add_category, data_value, (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }else{
+      console.log("Категория добавлена");
+      return response.status(200).json({ message: "Категория добавлена" });
+    }
+  });
+})
+
+app.get("/form_edit_category/:id", (req, response) =>{
+  const true_role = ["ADMIN"];
+  const id_category = req.params.id;
+  const sql_find_category = "SELECT * FROM category WHERE id_category=?";
+  /* const token = req.headers.authorization.split(" ")[1];
+  
+  if(token == "null"){
+    return response.status(400).json({ message: "Пользователь не авторизован" });
+  }
+
+  const { roles } = jwt.verify(token, secret);
+  let has_role = false;
+
+  if(true_role.includes(roles)){
+    has_role = true;
+  }
+
+  if(!has_role){
+    return response.status(400).json({ message: "У вас нет доступа" });
+  }  */
+
+  connection.query(sql_find_category, [id_category], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      response.render("edit_category.hbs", { 
+        category: data[0]
+      });
+    }
+  });
+})
+
+app.post("/form_edit_category", upload.none(), (req, response) =>{
+  const sql_update_category = "UPDATE category SET name_cat=?, rank_category=? WHERE id_category=?";
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+  
+  const obj_data = req.body;  
+  console.log("I am", obj_data);
+
+  connection.query(
+    sql_update_category, 
+    [
+      obj_data.name_cat, 
+      obj_data.rank_category,
+      obj_data.id_category
+    ], 
+    (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      return response.status(200).json({ message: "Изменено" });
+    }
+  });
+})
+
+/* Регистрация / Авторизация */
 
 app.post("/registration", upload.none(), (req, response) =>{
   
