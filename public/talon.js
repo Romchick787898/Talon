@@ -6,6 +6,7 @@ const upload = multer();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {secret} = require("./config");
+const { response } = require("express");
 
 const app = express();
 
@@ -471,14 +472,15 @@ app.post("/form_edit_benefits", upload.none(), (req, response) =>{
 
 app.get("/delete_benefits/:id", (req, response)=> {
   const id_benefits = req.params.id;
-  const sql_delete_benefits = "DELETE FROM benefits WHERE id_benefits=?";
+  const id_category = req.query.id_category;
+  const sql_delete_benefits = "DELETE FROM category_benefits WHERE id_benefits=? AND id_category=?";
 
-  connection.query(sql_delete_benefits, [id_benefits], (err, data) =>{
+  connection.query(sql_delete_benefits, [id_benefits, id_category], (err, data) =>{
     if(err){ 
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
-      response.redirect("/groups");
+      response.redirect("/category");
     }
   });
 })
@@ -593,6 +595,172 @@ app.post("/form_edit_category", upload.none(), (req, response) =>{
     }
   });
 })
+
+app.get("/delete_category/:id", (req, response)=> {
+  const id_category = req.params.id;
+  const sql_delete_category = "DELETE FROM category_benefits WHERE id_benefits=? AND id_category=?";
+
+  connection.query(sql_delete_category, [id_category], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД, проверьте что к категории не привязана льгота" });
+    }else{
+      response.redirect("/category");
+    }
+  });
+})
+
+/* Категории и студенты */
+
+app.get("/student_category/:id", (req, response)=>{
+  const id_student = req.params.id;
+  const sql_find_student_category = "SELECT category.id_category, category.name_cat, DATE_FORMAT(students_category.data_begin, '%Y-%m-%d %H:%i:%S') data_begin, DATE_FORMAT(students_category.data_end, '%Y-%m-%d %H:%i:%S') data_end FROM category, students_category WHERE students_category.id_category = category.id_category AND students_category.id_student=?";
+
+  connection.query(sql_find_student_category, [id_student], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      response.render("students_category.hbs", { 
+        student_category: data,
+        student: id_student,
+      });
+    }
+  });
+});
+
+app.get("/form_add_student_category", (req, response) =>{
+  const id_student = req.query.id_student;
+  const sql_find_category = "SELECT * FROM category";
+
+  connection.query(sql_find_category, (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      response.render("add_student_category.hbs", { 
+        category: data,
+        student: id_student,
+      });
+    }
+  });
+});
+
+app.post("/form_add_student_category", upload.none(), (req, response) =>{
+  const sql_add_student_category = "INSERT INTO students_category (id_student, id_category, data_begin, data_end) VALUES(?, ?, ?, ?)";
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+
+  const obj_data = req.body;
+
+  const data_value = [
+    obj_data.id_student,
+    obj_data.id_category,
+    obj_data.data_begin,
+    obj_data.data_end,
+  ];
+
+  console.log("Я отработал_2", data_value);
+
+  connection.query(sql_add_student_category, data_value, (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }else{
+      console.log("Категория добавлена");
+      return response.status(200).json({ message: "Категория добавлена" });
+    }
+  });
+});
+
+app.get("/form_edit_student_category/:id", (req, response) =>{
+  const true_role = ["ADMIN"];
+  const id_category = req.params.id;
+  const id_student = req.query.id_student;
+  const sql_find_category = "SELECT category.name_cat, DATE_FORMAT(students_category.data_begin, '%Y-%m-%d %H:%i:%S') data_begin, DATE_FORMAT(students_category.data_end, '%Y-%m-%d %H:%i:%S') data_end FROM students_category, category WHERE category.id_category = students_category.id_category AND students_category.id_student=? AND students_category.id_category = ?";
+  /* const token = req.headers.authorization.split(" ")[1];
+  
+  if(token == "null"){
+    return response.status(400).json({ message: "Пользователь не авторизован" });
+  }
+
+  const { roles } = jwt.verify(token, secret);
+  let has_role = false;
+
+  if(true_role.includes(roles)){
+    has_role = true;
+  }
+
+  if(!has_role){
+    return response.status(400).json({ message: "У вас нет доступа" });
+  }  */
+  
+  connection.query(sql_find_category, [id_student, id_category], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data[0]);
+      response.render("edit_student_category.hbs", { 
+        student_category: data[0],
+        category: id_category,
+        student: id_student,
+      });
+    }
+  });
+})
+
+app.post("/form_edit_student_category", upload.none(), (req, response) =>{
+
+
+  const sql_update_student_category = "UPDATE students_category SET data_begin=?, data_end=? WHERE id_category=? AND id_student=?";
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+  
+  const obj_data = req.body;  
+  console.log("I am", obj_data);
+
+  connection.query(
+    sql_update_student_category, 
+    [
+      obj_data.data_begin,
+      obj_data.data_end,
+      obj_data.id_category,
+      obj_data.id_student, 
+    ], 
+    (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      return response.status(200).json({ message: "Изменено" });
+    }
+  });
+})
+
+app.get("/delete_student_category/:id", (req, response) =>{
+  const id_student = req.query.id_student;
+  const id_category = req.params.id;
+  
+  console.log(id_student, id_category);
+
+  const sql_add_student_category = "DELETE FROM students_category WHERE id_student=? AND id_category=?";
+
+  connection.query(sql_add_student_category, [id_student, id_category], (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }else{
+      console.log("Связь удалена");
+      response.redirect("/groups");
+    }
+  });
+});
 
 /* Регистрация / Авторизация */
 

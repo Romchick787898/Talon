@@ -28,6 +28,11 @@ function Edit_student(event){
   document.location.href = "/form_edit_student/" + id_student;
 }
 
+function View_student(event){  
+  let id_student = event.target.getAttribute("data-id_tr");
+  document.location.href = "/student_category/" + id_student;
+}
+
 function Delete_group(event){
   let id_group = event.target.getAttribute("data-id_tr");
   document.location.href = "/delete_group/" + id_group;
@@ -60,10 +65,23 @@ function View_category(event){
 
 function Delete_benefits(event){
   let id_benefits = event.target.getAttribute("data-id_tr");
-  document.location.href = "/delete_benefits/" + id_benefits;
+  let id_category = event.target.getAttribute("data-id_category");
+  document.location.href = "/delete_benefits/" + id_benefits + "?id_category=" + id_category;
 }
 
 function Edit_benefits(event){  
   let id_benefits = event.target.getAttribute("data-id_tr");
   document.location.href = "/form_edit_benefits/" + id_benefits;
+}
+
+function Delete_student_category(event){
+  let id_category = event.target.getAttribute("data-id_tr");
+  let id_student = event.target.getAttribute("data-id_student");
+  document.location.href = "/delete_student_category/" + id_category + "?id_student=" + id_student;
+}
+
+function Edit_student_category(event){
+  let id_category = event.target.getAttribute("data-id_tr");
+  let id_student = event.target.getAttribute("data-id_student");
+  document.location.href = "/form_edit_student_category/" + id_category + "?id_student=" + id_student;
 }

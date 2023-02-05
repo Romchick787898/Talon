@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
-  <title>Студенты</title>
+  <title>Категории студента</title>
 </head>
 <body>
   <header>
@@ -27,29 +27,27 @@
         <table id="table_for_all">
           <thead>
             <tr>
-              <th>id</th>
-              <th>Фамилия</th>
-              <th>Имя</th>
-              <th>Отчество</th>
+              <th>Название категории</th>
+              <th>Дата начала действия категории у студента</th>
+              <th>Дата окончания действия категории у студента</th>
             </tr>
           </thead>
           <tbody>
-            {{#each students}}
-              <tr id="{{this.id_student}}">
-                <td>{{this.id_student}}</td>
-                <td>{{this.middleName}}</td>
-                <td>{{this.firstName}}</td>
-                <td>{{this.lastName}}</td>
+            {{#each student_category}}
+              <tr id="{{this.id_category}}">
+                <td>{{this.name_cat}}</td>
+                <td>{{this.data_begin}}</td>
+                <td>{{this.data_end}}</td>
               </tr>
             {{/each}}
           </tbody>
         </table>
       </div>
       <div class="menu_for_add_delete_edit">
-        <button onclick="Delete_student(event)" id="delete_btn">Удалить</button>
-        <button onclick="Edit_student(event)" id="edit_btn">Изменить</button>
-        <button onclick="document.location.href = '/form_add_student?id_group={{group}}'">Добавить</button>
-        <button onclick="View_student(event)" id="view_btn">Просмотреть</button>
+        <button onclick="Delete_student_category(event)" id="delete_btn" data-id_student="{{student}}">Удалить</button>
+        <button onclick="Edit_student_category(event)" id="edit_btn" data-id_student="{{student}}">Изменить</button>
+        <button onclick="document.location.href = '/form_add_student_category?id_student={{student}}'">Добавить</button>
+        <button id="view_btn" style="display:none;">Просмотреть</button>
       </div>
     </div>
   </div>
