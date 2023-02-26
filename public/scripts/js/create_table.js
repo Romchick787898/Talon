@@ -66,7 +66,13 @@ function View_category(event){
 function Delete_benefits(event){
   let id_benefits = event.target.getAttribute("data-id_tr");
   let id_category = event.target.getAttribute("data-id_category");
-  document.location.href = "/delete_benefits/" + id_benefits + "?id_category=" + id_category;
+  document.location.href = "/delete_benefits/" + id_benefits;
+}
+
+function Delete_benefits_for_category(event){
+  let id_benefits = event.target.getAttribute("data-id_tr");
+  let id_category = event.target.getAttribute("data-id_category");
+  document.location.href = "/delete_benefits_for_category/" + id_benefits + "?id_category=" + id_category;
 }
 
 function Edit_benefits(event){  
@@ -84,4 +90,14 @@ function Edit_student_category(event){
   let id_category = event.target.getAttribute("data-id_tr");
   let id_student = event.target.getAttribute("data-id_student");
   document.location.href = "/form_edit_student_category/" + id_category + "?id_student=" + id_student;
+}
+
+function Delete_user(event){
+  let id_user = event.target.getAttribute("data-id_tr");
+  document.location.href = "/delete_user/" + id_user;
+}
+
+function Edit_user(event){  
+  let id_user = event.target.getAttribute("data-id_tr");
+  document.location.href = "/form_edit_user/" + id_user;
 }

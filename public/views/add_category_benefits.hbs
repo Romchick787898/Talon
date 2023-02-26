@@ -19,6 +19,8 @@
       <div class="container_side-bar">
         <a href="/students">Группы</a>
         <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
+        <a href="/all_benefits">Льготы</a>
+        <a href="/users">Пользователи</a>
         <a href="/report">Отчет</a>
       </div>
     </div>
@@ -31,21 +33,15 @@
         </h2>
         <input type="hidden" value="{{category}}" name="id_category">
         Название льготы:
-        <input type="text" name="name_ben">
-        Время начала действия льготы в течениее дня:
-        <input type="text" name="first_time">
-        Время конца действия льготы в течениее дня:
-        <input type="text" name="last_time">
-        Дата начала действия льготы:
-        <input type="text" name="data_begin">
-        Дата конца действия льготы:
-        <input type="text" name="data_end">
-        Цена льготы:
-        <input type="number" name="cost">
+        <select name="name_ben">
+          {{#each benefits}}
+            <option value="{{this.id_benefits}}">{{this.name_ben}}</option>
+          {{/each}}
+        </select>
         <button class="add_btn" type="submit">Добавить</button>
       </form>
     </div>
   </div>
-  <script src="/code_add_benefits.js"></script>
+  <script src="../scripts/js/add_data/code_add_benefits_for_category.js"></script>
 </body>
 </html>

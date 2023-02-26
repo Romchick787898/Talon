@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
-  <title>Добавить категорию</title>
+  <title>Добавить студента</title>
 </head>
 <body>
   <header>
@@ -18,27 +18,29 @@
     <div class="side-bar">
       <div class="container_side-bar">
         <a href="/groups">Группы</a>
-        <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
+        <a href="/category">Категории</a>
         <a href="/benefits">Льготы</a>
-        <a href="/users">Пользователи</a>
+        <a href="/users"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Пользователи</a>
         <a href="/report">Отчет</a>
       </div>
     </div>
     <div class="main">
-      <form class="form_add_student" id="form_add_category">
+      <form class="form_add_student" id="form_add_user">
         <h2 style=" 
           margin-bottom: 50px;
         ">
-        <span style="color: #3c8bff;">></span> Добавить категорию:
+        <span style="color: #3c8bff;">></span> Добавить пользователя:
         </h2>
-        Название категории:
-        <input type="text" name="name_cat">
-        Ранг категории:
-        <input type="number" name="rank" min="1">
+        Имя пользователя:
+        <input type="text" name="username">
+        Пароль:
+        <input type="text" name="password">
+        Роль:
+        <input type="text" name="role">
         <button class="add_btn" type="submit">Добавить</button>
       </form>
     </div>
   </div>
-  <script src="../scripts/js/add_data/code_add_category.js"></script>
+  <script src="./scripts/js/add_data/code_add_user.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-async function Edit_benefits(ev){
+async function Login(ev){
   ev.preventDefault();
-  await fetch("/form_edit_benefits", {
+  await fetch("/login", {
     method: "POST",
     body: new FormData(ev.target),
   })
@@ -11,5 +11,5 @@ async function Edit_benefits(ev){
     })
 }
 
-let form_benefits = document.querySelector("#form_edit_benefits");
-form_benefits.addEventListener("submit", Edit_benefits);
+let form = document.querySelector("#form_avtorization");
+form.addEventListener("submit", Login);

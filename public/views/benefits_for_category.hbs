@@ -18,8 +18,8 @@
     <div class="side-bar">
       <div class="container_side-bar">
         <a href="/groups">Группы</a>
-        <a href="/category">Категории</a>
-        <a href="/benefits"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Льготы</a>
+        <a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a>
+        <a href="/benefits">Льготы</a>
         <a href="/users">Пользователи</a>
         <a href="/report">Отчет</a>
       </div>
@@ -52,9 +52,9 @@
         </table>
       </div>
       <div class="menu_for_add_delete_edit">
-        <button onclick="Delete_benefits(event)" id="delete_btn">Удалить</button>
-        <button onclick="Edit_benefits(event)" id="edit_btn">Изменить</button>
-        <button onclick="document.location.href = '/form_add_benefits'">Добавить</button>
+        <button onclick="Delete_benefits_for_category(event)" id="delete_btn" data-id_category="{{category}}">Удалить</button>
+        <button onclick="Edit_benefits(event)" id="edit_btn" style="display:none;">Изменить</button>
+        <button onclick="document.location.href = '/form_add_benefits/{{category}}'">Добавить</button>
         <button style="display:none;" id="view_btn">Просмотреть</button>
       </div>
     </div>

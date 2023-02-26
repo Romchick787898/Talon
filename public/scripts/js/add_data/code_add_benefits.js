@@ -7,7 +7,7 @@ async function Add_benefits(ev){
     .then(response => response.json())
     .then(result => {
       alert(result.message);
-      document.location.href = "/category";
+      document.location.href = "/benefits";
     })
 }
 

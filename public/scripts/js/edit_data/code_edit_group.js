@@ -13,3 +13,5 @@ async function Edit_group(ev){
 
 let form_group = document.querySelector("#form_edit_group");
 form_group.addEventListener("submit", Edit_group);
+
+console.log(1);
