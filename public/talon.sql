@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 07 2023 г., 00:39
+-- Время создания: Фев 28 2023 г., 18:55
 -- Версия сервера: 8.0.24
 -- Версия PHP: 8.0.8
 
@@ -48,7 +48,9 @@ INSERT INTO `benefits` (`id_benefits`, `name_ben`, `first_time`, `last_time`, `c
 (4, 'Четвертый BENEFITS', '18:08:48', '18:08:48', '103', '2023-01-19 18:08:48', '2023-01-19 18:08:48'),
 (5, 'Пятый BENEFITS', '15:00:00', '16:00:00', '500', '2023-01-01 00:00:00', '2024-01-01 00:00:00'),
 (10, 'Шестой BENEFITS', '15:00:00', '16:00:00', '850', '2023-01-01 00:00:00', '2024-01-01 00:00:00'),
-(11, 'Седьмой BENEFITS', '15:00:00', '16:00:00', '800', '2023-01-19 18:08:48', '2024-01-19 18:08:48');
+(11, 'Седьмой BENEFITS', '15:00:00', '16:00:00', '800', '2023-01-19 18:08:48', '2024-01-19 18:08:48'),
+(12, 'Восьмой BENEFITS', '08:00:00', '12:00:00', '150', '2023-01-01 00:00:00', '2024-01-01 00:00:00'),
+(13, 'Девятый BENEFITS', '15:00:00', '16:00:00', '300', '2023-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -68,8 +70,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`id_category`, `name_cat`, `rank_category`) VALUES
 (1, 'Первая категория', 1),
-(2, 'Вторая категория', 2),
-(3, 'Третья категория', 3);
+(2, 'Вторая категория', 2);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,8 @@ INSERT INTO `category_benefits` (`id_category`, `id_benefits`) VALUES
 (1, 2),
 (2, 2),
 (2, 4),
-(1, 10);
+(1, 10),
+(2, 13);
 
 -- --------------------------------------------------------
 
@@ -113,6 +115,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id_student`, `firstName`, `middleName`, `lastName`, `id_group`) VALUES
+(11, 'Михаил', 'Садиков', 'Владиславович', 3),
 (95, 'Николай', 'Каручев', 'Иванович', 1),
 (100, 'Роман', 'Северов', 'Павлович', 1);
 
@@ -134,7 +137,8 @@ CREATE TABLE `students_category` (
 --
 
 INSERT INTO `students_category` (`id_student`, `id_category`, `data_begin`, `data_end`) VALUES
-(100, 1, '2023-01-01 00:00:00', '2025-01-01 00:00:00');
+(100, 1, '2023-01-01 00:00:00', '2025-01-01 00:00:00'),
+(100, 2, '2023-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -155,6 +159,27 @@ CREATE TABLE `study_groups` (
 INSERT INTO `study_groups` (`id_group`, `name_group`, `description_group`) VALUES
 (1, '497Б', 'Информационные системы и программирование'),
 (3, '497В', 'Информационные системы и программирование');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` int NOT NULL,
+  `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` text NOT NULL,
+  `role` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
+(1, 'Roman Severov', '1234', 'ADMIN'),
+(3, 'Romchick787898', '$2a$10$UZTS6kqlk0kKzobqNAmzGutAzQ2rC8/Ojdx3LAyhqjWqqtcqu2xGm', 'ADMIN');
 
 -- --------------------------------------------------------
 
@@ -218,6 +243,13 @@ ALTER TABLE `study_groups`
   ADD UNIQUE KEY `name_group` (`name_group`);
 
 --
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Индексы таблицы `use_benefits`
 --
 ALTER TABLE `use_benefits`
@@ -233,19 +265,25 @@ ALTER TABLE `use_benefits`
 -- AUTO_INCREMENT для таблицы `benefits`
 --
 ALTER TABLE `benefits`
-  MODIFY `id_benefits` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_benefits` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_category` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `study_groups`
 --
 ALTER TABLE `study_groups`
   MODIFY `id_group` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
