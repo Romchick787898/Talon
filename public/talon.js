@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
   host: "localhost", 
   user: "root",
   database: "talon",
-  password: "787898ggh"
+  password: ""
 });
 
 function Generate_access_token(id, roles){

@@ -88,13 +88,16 @@ header button:hover{
 
 .side-bar a{
   margin-top: 15px;
-	width: 100%;
-  display: flex;
+	max-width: 170px;
+  display: inline-block;
   margin-left: 30px;
   align-items: center;
 	height: 30px;
 	font-size: 20px;
   cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   transition: 0.3s;
   color: #1a1a1a;
   text-decoration: none;
