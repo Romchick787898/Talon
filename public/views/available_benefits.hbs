@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Талон</title>
+</head>
+<body>
+  <div class="container_avtorization">
+    <form class="form_avto" id="form_add_use_benefits">
+      <div class="header_form">Талон</div>
+      <div class="container_inps">
+        <label>Студент:</label>
+        <input type="text" value="{{student}}" class="inp_avto" readonly name="id_student">
+        <label>Выберите льготу:</label>
+        <select type="text" class="inp_avto" name="id_benefits">
+          {{#each available_benefits}}
+            <option value="{{this.id_benefits}}_{{this.rank_category}}">{{this.name_ben}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button>Отправить</button>
+    </form>
+  </div>
+  <script src="../scripts/js/add_data/code_add_use_benefits.js"></script>
+</body>
+</html>

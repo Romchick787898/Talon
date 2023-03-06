@@ -101,3 +101,9 @@ function Edit_user(event){
   let id_user = event.target.getAttribute("data-id_tr");
   document.location.href = "/form_edit_user/" + id_user;
 }
+
+function Get_available_benefits(event){
+  event.preventDefault();
+  const id_student = document.querySelector("#id_student").value;
+  document.location.href = "/available_benefits/" + id_student;
+}

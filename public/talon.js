@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
   host: "localhost", 
   user: "root",
   database: "talon",
-  password: ""
+  password: "787898ggh"
 });
 
 function Generate_access_token(id, roles){
@@ -33,8 +33,8 @@ function Generate_access_token(id, roles){
   return token;
 }
 
-function Valide_role(req){
-  const true_role = ["ADMIN"];
+function Valide_role(req, role){
+  const true_role = role;
   const token = req.cookies.token;
 
   try{
@@ -62,7 +62,7 @@ app.get("/", (req, res) =>{
 /* Группы */
 
 app.get("/groups", (req, response) =>{
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -83,7 +83,7 @@ app.get("/groups", (req, response) =>{
 });
 
 app.get("/form_add_group", (req, response) =>{
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -93,7 +93,7 @@ app.get("/form_add_group", (req, response) =>{
 
 app.post("/form_add_group", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -122,7 +122,7 @@ app.post("/form_add_group", upload.none(), (req, response) =>{
 
 app.get("/form_edit_group/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -146,7 +146,7 @@ app.get("/form_edit_group/:id", (req, response) =>{
 
 app.post("/form_edit_group", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -178,7 +178,7 @@ app.post("/form_edit_group", upload.none(), (req, response) =>{
 
 app.get("/delete_group/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -201,7 +201,7 @@ app.get("/delete_group/:id", (req, response)=> {
 
 app.get("/students/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -226,7 +226,7 @@ app.get("/students/:id", (req, response) =>{
 
 app.get("/form_add_student", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -237,7 +237,7 @@ app.get("/form_add_student", (req, response) =>{
 
 app.post("/form_add_student", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -272,7 +272,7 @@ app.post("/form_add_student", upload.none(), (req, response) =>{
 
 app.get("/form_edit_student/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -296,7 +296,7 @@ app.get("/form_edit_student/:id", (req, response) =>{
 
 app.post("/form_edit_student", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -333,7 +333,7 @@ app.post("/form_edit_student", upload.none(), (req, response) =>{
 
 app.get("/delete_student/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -356,7 +356,7 @@ app.get("/delete_student/:id", (req, response)=> {
 
 app.get("/benefits", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -379,7 +379,7 @@ app.get("/benefits", (req, response) =>{
 
 app.get("/benefits/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -405,7 +405,7 @@ app.get("/benefits/:id", (req, response) =>{
 
 app.get("/form_add_benefits", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -417,7 +417,7 @@ app.get("/form_add_benefits", (req, response) =>{
 
 app.get("/form_add_benefits/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -441,7 +441,7 @@ app.get("/form_add_benefits/:id", (req, response) =>{
 
 app.post("/form_add_benefits", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -478,7 +478,7 @@ app.post("/form_add_benefits", upload.none(), (req, response) =>{
 
 app.post("/form_add_benefits_for_category", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -510,7 +510,7 @@ app.post("/form_add_benefits_for_category", upload.none(), (req, response) =>{
 
 app.get("/form_edit_benefits/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -534,7 +534,7 @@ app.get("/form_edit_benefits/:id", (req, response) =>{
 
 app.post("/form_edit_benefits", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -573,7 +573,7 @@ app.post("/form_edit_benefits", upload.none(), (req, response) =>{
 
 app.get("/delete_benefits_for_category/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -595,7 +595,7 @@ app.get("/delete_benefits_for_category/:id", (req, response)=> {
 
 app.get("/delete_benefits/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -618,7 +618,7 @@ app.get("/delete_benefits/:id", (req, response)=> {
 
 app.get("/category", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -641,7 +641,7 @@ app.get("/category", (req, response) =>{
 
 app.get("/form_add_category", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -652,7 +652,7 @@ app.get("/form_add_category", (req, response) =>{
 
 app.post("/form_add_category", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -686,7 +686,7 @@ app.post("/form_add_category", upload.none(), (req, response) =>{
 
 app.get("/form_edit_category/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -709,7 +709,7 @@ app.get("/form_edit_category/:id", (req, response) =>{
 
 app.post("/form_edit_category", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -744,7 +744,7 @@ app.post("/form_edit_category", upload.none(), (req, response) =>{
 
 app.get("/delete_category/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -767,7 +767,7 @@ app.get("/delete_category/:id", (req, response)=> {
 
 app.get("/student_category/:id", (req, response)=>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -791,7 +791,7 @@ app.get("/student_category/:id", (req, response)=>{
 
 app.get("/form_add_student_category", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -815,7 +815,7 @@ app.get("/form_add_student_category", (req, response) =>{
 
 app.post("/form_add_student_category", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -851,7 +851,7 @@ app.post("/form_add_student_category", upload.none(), (req, response) =>{
 
 app.get("/form_edit_student_category/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -878,7 +878,7 @@ app.get("/form_edit_student_category/:id", (req, response) =>{
 
 app.post("/form_edit_student_category", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -914,7 +914,7 @@ app.post("/form_edit_student_category", upload.none(), (req, response) =>{
 
 app.get("/delete_student_category/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -942,7 +942,7 @@ app.get("/delete_student_category/:id", (req, response) =>{
 
 app.get("/users", (req, response)=>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -964,7 +964,7 @@ app.get("/users", (req, response)=>{
 
 app.get("/form_add_user", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -975,7 +975,7 @@ app.get("/form_add_user", (req, response) =>{
 
 app.get("/form_edit_user/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -999,7 +999,7 @@ app.get("/form_edit_user/:id", (req, response) =>{
 
 app.post("/form_edit_user", upload.none(), (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -1035,7 +1035,7 @@ app.post("/form_edit_user", upload.none(), (req, response) =>{
 
 app.get("/delete_user/:id", (req, response)=> {
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -1056,9 +1056,20 @@ app.get("/delete_user/:id", (req, response)=> {
 
 /* Для обычных User-ов */
 
+app.get("/user", (req, response)=>{
+
+  const has_role = Valide_role(req, ["USER"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+  response.sendFile(__dirname + "/user.html");
+})
+
 app.get("/available_benefits/:id", (req, response) =>{
 
-  const has_role = Valide_role(req);
+  const has_role = Valide_role(req, ["USER"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
@@ -1066,25 +1077,23 @@ app.get("/available_benefits/:id", (req, response) =>{
 
   const id_student = req.params.id;
 
-  const sql_find_all_available_benefits_for_student  = "SELECT DISTINCT benefits.name_ben FROM benefits, category, students_category, category_benefits WHERE students_category.id_category = category.id_category AND students_category.id_student = ? AND category_benefits.id_category = category.id_category AND category_benefits.id_benefits = benefits.id_benefits AND benefits.first_time < CURTIME() AND benefits.last_time > CURTIME() AND benefits.data_begin < NOW() AND benefits.data_end > NOW()";
-
-  function Convert_json(data){
-
-    const unique_name = [];
-  
-    const json = data
-    .sort((item_1, item_2)=>{
-      return item_1.rank_category - item_2.rank_category; 
-    })
-    .filter((item) => {
-      if(!unique_name.includes(item.name_benefits)){
-        unique_name.push(item.name_benefits);
-        return item;
-      }
-    });
-  
-    return json;
-  }
+  const sql_find_all_available_benefits_for_student  = `
+  SELECT benefits.id_benefits, benefits.name_ben, MAX(category.rank_category) as rank_category
+  FROM students_category
+  JOIN category ON students_category.id_category = category.id_category
+  JOIN category_benefits ON category.id_category = category_benefits.id_category 
+  JOIN benefits ON category_benefits.id_benefits = benefits.id_benefits 
+  LEFT JOIN use_benefits ON benefits.id_benefits = use_benefits.id_benefits 
+      AND CAST(use_benefits.date_use AS DATE) = CAST(NOW() AS DATE) 
+      AND use_benefits.id_student = 100
+  WHERE students_category.id_student = 100 
+  AND benefits.first_time < "11:00:00" 
+  AND benefits.last_time > "11:00:00" 
+  AND benefits.data_begin < NOW() 
+  AND benefits.data_end > NOW() 
+  AND use_benefits.id_benefits IS NULL
+  GROUP BY benefits.id_benefits, benefits.name_ben;
+  `;
 
   connection.query(sql_find_all_available_benefits_for_student, [id_student], (err, data) =>{
     if(err){
@@ -1092,11 +1101,46 @@ app.get("/available_benefits/:id", (req, response) =>{
       return response.status(400).json({ message: "Ошибка с БД" });
     }else{
       console.log(data);
-      const json = Convert_json(data);
-      return response.status(400).json({ message: json });
+      response.render("available_benefits.hbs", { 
+        student: id_student,
+        available_benefits: data
+      });
     }
   });
 
+})
+
+app.post("/use_benefits", upload.none(), (req, response)=>{
+
+  const has_role = Valide_role(req, ["USER"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+
+  const obj_data = req.body;
+  const sql_add_use_benefits = "INSERT INTO use_benefits(id_student, id_category, id_benefits, date_use) VALUES(?, ?, ?, NOW())";
+
+  const id_category_and_id_benefits = obj_data.id_benefits.split("_");
+
+  const data_value = [
+    obj_data.id_student,
+    id_category_and_id_benefits[1],
+    id_category_and_id_benefits[0]
+  ];
+
+  connection.query(sql_add_use_benefits, data_value, (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }
+    response.status(200).json({ message: "Льгота Использована" });
+  });
 })
 
 /* Регистрация / Авторизация */
@@ -1161,7 +1205,7 @@ app.post("/login", upload.none(), (req, response) =>{
       httpOnly: true
     });
 
-    return response.status(200).json({ message: "Куки" });
+    return response.status(200).json({ message: data[0].role });
   }
 
   Find_or_Login();

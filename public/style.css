@@ -391,7 +391,7 @@ select{
   height: 470px;
   background: white;
   box-shadow: 0 0 50px  rgb(0 0 0 / 15%);
-  border-radius: 5px;
+  border-radius: 15px 5px 5px 5px;
 }
 
 .container_inps{
@@ -399,6 +399,14 @@ select{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.container_inps label{
+  width: 300px;
+  float: left;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .ref{
@@ -414,25 +422,15 @@ select{
   margin: 0 auto;
   margin-bottom: 30px;
   padding: 5px;
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
   transition: 0.3s;
+  box-sizing: border-box;
 }
 
 .inp_avto:focus{
   border: 1px solid #3c8bff;
   box-shadow: 0 0 5px #3c8bff;
-}
-
-.name_avto{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-size: 25px;
-  background: #3c8bff;
-  color: white;
-  height: 30px;
-  border-radius: 5px 5px 0 0px;
 }
 
 .form_avto button{
@@ -441,12 +439,12 @@ select{
   height: 30px;
   background: #3c8bff;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 5px;
-  right: 20px;
+  right: 25px;
   cursor: pointer;
   transition: 0.3s;
-  margin-top: 40px;
+  bottom: 30px;
 }
 
 .container_avtorization button:hover{
@@ -552,6 +550,8 @@ select{
   background: rgb(60, 139, 255);
   color: white;
   border-radius: 15px 0px 15px 0px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .btn_avto_reg_text{

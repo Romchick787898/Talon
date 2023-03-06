@@ -7,7 +7,11 @@ async function Login(ev){
     .then(response => response.json())
     .then(result => {
       alert(result.message);
-      document.location.href = "/category";
+      if(result.message == "ADMIN"){
+        document.location.href = "/groups";
+      }else if(result.message == "USER"){
+        document.location.href = "/user";
+      }
     })
 }
 
