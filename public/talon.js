@@ -1,13 +1,11 @@
 const mysql = require("mysql2");
 const express = require("express");
-const body_parser = require("body-parser");
 const multer = require("multer");
 const upload = multer();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {secret} = require("./config");
-const { response } = require("express");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -1209,6 +1207,11 @@ app.post("/login", upload.none(), (req, response) =>{
   }
 
   Find_or_Login();
+})
+
+app.get("/logout", (req, response) =>{
+  response.clearCookie("token");
+  return response.redirect("/");
 })
 
 app.listen(3000, () =>{ console.log("Сервер запущен...") });
