@@ -308,7 +308,10 @@ app.get("/students", (req, response) =>{
     return response.status(200).json({ message: "У вас нет досутпа" })
   }
     
-  const sql_find_groups = "SELECT * FROM students";
+  const sql_find_groups = `
+  SELECT students.id_student, students.firstName, students.middleName, students.lastName, 
+    IF(students.id_group IS NOT NULL, study_groups.name_group, "Группы нет") AS name_group 
+  FROM students LEFT JOIN study_groups ON students.id_group = study_groups.id_group;`;
   connection.query(sql_find_groups, (err, data) =>{
     if(err){ 
       console.log(err);
