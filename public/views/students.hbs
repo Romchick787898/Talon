@@ -17,6 +17,7 @@
   <div class="container">
     <div class="side-bar">
       <ul class="container_side-bar">
+        <li><a href="/students">Все студенты</a></li>
         <li><a href="/groups"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a></li>
         <li><a href="/category">Категории</a></li>
         <li><a href="/benefits">Льготы</a></li>
@@ -48,9 +49,8 @@
         </table>
       </div>
       <div class="menu_for_add_delete_edit">
-        <button onclick="Delete_student(event)" id="delete_btn">Удалить</button>
-        <button onclick="Edit_student(event)" id="edit_btn">Изменить</button>
-        <button onclick="document.location.href = '/form_add_student?id_group={{group}}'">Добавить</button>
+        <button onclick="Delete_student_groups(event)" id="delete_btn">Удалить</button>
+        <button onclick="document.location.href = '/form_add_student_for_group/{{group}}'">Добавить</button>
         <button onclick="View_student(event)" id="view_btn">Просмотреть</button>
       </div>
     </div>

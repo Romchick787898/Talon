@@ -7,7 +7,7 @@ async function Edit_students(ev){
     .then(response => response.json())
     .then(result => {
       alert(result.message);
-      document.location.href = "/groups";
+      document.location.href = "/students";
     })
 }
 

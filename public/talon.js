@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {secret} = require("./config");
 const cookieParser = require('cookie-parser');
+const { response } = require("express");
 
 const app = express();
 
@@ -58,6 +59,109 @@ app.get("/", (req, res) =>{
 });
 
 /* Группы */
+
+app.get("/students/:id", (req, response) =>{
+
+  const has_role = Valide_role(req, ["ADMIN"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+  const id_group = req.params.id;
+  const sql_find_students = "SELECT * FROM students WHERE id_group=?";
+
+  connection.query(sql_find_students, [id_group], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      response.render("students.hbs", { 
+        students: data,
+        group: id_group
+      });
+    }
+  });
+});
+
+app.get("/form_add_student_for_group/:id", (req, response) =>{
+
+  const has_role = Valide_role(req, ["ADMIN"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+  const id_group = req.params.id;
+  const sql_find_students = "SELECT * FROM students";
+
+  connection.query(sql_find_students, [id_group], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      response.render("form_add_student_in_group.hbs", { 
+        students: data,
+        group: id_group
+      });
+    }
+  });
+});
+
+app.post("/form_add_student_for_group", upload.none(), (req, response) =>{
+  const has_role = Valide_role(req, ["ADMIN"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+
+  if(!req.body){
+    return response.status(400).send();
+  }
+
+  const sql_add_group = "UPDATE students SET id_group=? WHERE id_student=?;";
+
+  const obj_data = req.body;
+
+  const data_value = [
+    obj_data.id_group,
+    obj_data.students
+  ];
+
+  console.log(data_value);
+
+  connection.query(sql_add_group, data_value, (err, res) =>{
+    if(err){
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка с БД" });
+    }
+    response.status(200).json({ message: "Студент добавлен в группу" });
+  });
+});
+
+app.get("/delete_students_group/:id", (req, response) =>{
+  const has_role = Valide_role(req, ["ADMIN"]);
+  
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+  const id_student = req.params.id;
+    
+  const sql_find_groups = "UPDATE students SET id_group = NULL WHERE id_student=?";
+  connection.query(sql_find_groups, [id_student], (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      console.log(data);
+      response.redirect("/groups");
+    }
+  });
+})
 
 app.get("/groups", (req, response) =>{
   const has_role = Valide_role(req, ["ADMIN"]);
@@ -197,30 +301,26 @@ app.get("/delete_group/:id", (req, response)=> {
 
 /* Студенты */
 
-app.get("/students/:id", (req, response) =>{
-
+app.get("/students", (req, response) =>{
   const has_role = Valide_role(req, ["ADMIN"]);
   
   if(!has_role){ // Если ошибка
     return response.status(200).json({ message: "У вас нет досутпа" })
   }
-
-  const id_group = req.params.id;
-  const sql_find_students = "SELECT * FROM students WHERE id_group=?";
-
-  connection.query(sql_find_students, [id_group], (err, data) =>{
+    
+  const sql_find_groups = "SELECT * FROM students";
+  connection.query(sql_find_groups, (err, data) =>{
     if(err){ 
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
       console.log(data);
-      response.render("students.hbs", { 
-        students: data,
-        group: id_group
+      response.render("all_students.hbs", { 
+        students: data
       });
     }
   });
-});
+})
 
 app.get("/form_add_student", (req, response) =>{
 
@@ -241,7 +341,7 @@ app.post("/form_add_student", upload.none(), (req, response) =>{
     return response.status(200).json({ message: "У вас нет досутпа" })
   }
 
-  const sql_add_student = "INSERT INTO students (id_student, firstName, middleName, lastName, id_group) VALUES(?, ?, ?, ?, ?)";
+  const sql_add_student = "INSERT INTO students (id_student, firstName, middleName, lastName, id_group) VALUES(?, ?, ?, ?, NULL)";
 
   if(!req.body){
     return response.status(400).send();
@@ -345,7 +445,7 @@ app.get("/delete_student/:id", (req, response)=> {
       console.log(err);
       return response.status(400).json({ message: "Ошибка БД" });
     }else{
-      response.redirect("/groups");
+      response.redirect("/students");
     }
   });
 })

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
-  <title>Пользователи</title>
+  <title>Студенты</title>
 </head>
 <body>
   <header>
@@ -17,11 +17,11 @@
   <div class="container">
     <div class="side-bar">
       <ul class="container_side-bar">
-        <li><a href="/students">Все студенты</a></li>
+        <li><a href="/students"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Все студенты</a></li>
         <li><a href="/groups">Группы</a></li>
         <li><a href="/category">Категории</a></li>
         <li><a href="/benefits">Льготы</a></li>
-        <li><a href="/users"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Пользователи</a></li>
+        <li><a href="/users">Пользователи</a></li>
         <li><a href="/report">Отчет</a></li>
       </ul>
     </div>
@@ -30,25 +30,28 @@
         <table id="table_for_all">
           <thead>
             <tr>
-              <th>Имя пользователя</th>
-              <th>Роль</th>
+              <th>id</th>
+              <th>Фамилия</th>
+              <th>Имя</th>
+              <th>Отчество</th>
             </tr>
           </thead>
           <tbody>
-            {{#each users}}
-              <tr id="{{this.id_user}}">
-                <td>{{this.username}}</td>
-                <td>{{this.role}}</td>
+            {{#each students}}
+              <tr id="{{this.id_student}}">
+                <td>{{this.id_student}}</td>
+                <td>{{this.middleName}}</td>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
               </tr>
             {{/each}}
           </tbody>
         </table>
       </div>
       <div class="menu_for_add_delete_edit">
-        <button onclick="Delete_user(event)" id="delete_btn">Удалить</button>
-        <button onclick="Edit_user(event)" id="edit_btn">Изменить</button>
-        <button onclick="document.location.href = '/form_add_user'">Добавить</button>
-        <button onclick="View_student(event)" id="view_btn" style="display: none;">Просмотреть</button>
+        <button onclick="Delete_student(event)" id="delete_btn">Удалить</button>
+        <button onclick="Edit_student(event)" id="edit_btn">Изменить</button>
+        <button onclick="document.location.href = '/form_add_student?id_group={{group}}'">Добавить</button>
       </div>
     </div>
   </div>

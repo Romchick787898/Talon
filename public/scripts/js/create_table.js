@@ -23,6 +23,11 @@ function Delete_student(event){
   document.location.href = "/delete_student/" + id_student;
 }
 
+function Delete_student_groups(event){
+  let id_student = event.target.getAttribute("data-id_tr");
+  document.location.href = "/delete_students_group/" + id_student;
+}
+
 function Edit_student(event){  
   let id_student = event.target.getAttribute("data-id_tr");
   document.location.href = "/form_edit_student/" + id_student;

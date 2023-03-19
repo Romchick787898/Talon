@@ -18,31 +18,31 @@
     <div class="side-bar">
       <ul class="container_side-bar">
         <li><a href="/students">Все студенты</a></li>
-        <li><a href="/groups">Группы</a></li>
-        <li><a href="/category"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Категории</a></li>
+        <li><a href="/groups"><span style="color: #3c8bff; margin-left: -15px; position: absolute;">></span>Группы</a></li>
+        <li><a href="/category">Категории</a></li>
         <li><a href="/benefits">Льготы</a></li>
         <li><a href="/users">Пользователи</a></li>
         <li><a href="/report">Отчет</a></li>
       </ul>
     </div>
     <div class="main">
-      <form class="form_add_student" id="form_add_benefits">
+      <form class="form_add_student" id="form_add_students_in_groups">
         <h2 style=" 
           margin-bottom: 50px;
         ">
-        <span style="color: #3c8bff;">></span> Добавить льготу:
+        <span style="color: #3c8bff;">></span> Добавить сутдента в группу:
         </h2>
-        <input type="hidden" value="{{category}}" name="id_category">
-        Название льготы:
-        <select name="name_ben">
-          {{#each benefits}}
-            <option value="{{this.id_benefits}}">{{this.name_ben}}</option>
+        <input type="hidden" value="{{group}}" name="id_group">
+        Студенты:
+        <select name="students">
+          {{#each students}}
+            <option value="{{this.id_student}}">{{this.firstName}} {{this.middleName}} {{this.lastName}}</option>
           {{/each}}
         </select>
         <button class="add_btn" type="submit">Добавить</button>
       </form>
     </div>
   </div>
-  <script src="../scripts/js/add_data/code_add_benefits_for_category.js"></script>
+  <script src="../scripts/js/add_data/code_add_students_for_groups.js"></script>
 </body>
 </html>
