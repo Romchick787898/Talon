@@ -15,7 +15,7 @@
         <label>Введите номер зачетки:</label>
         <input type="text" class="inp_avto" id="id_student">
       </div>
-      <button onclick="Get_available_benefits(event)">Отправить</button>
+      <button onclick="event.preventDefault(); document.location.href='/logout'" style="left: 25px;">Выйти</button><button onclick="Get_available_benefits(event)">Отправить</button>
     </form>
   </div>
   <script src="./scripts/js/create_table.js"></script>

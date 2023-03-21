@@ -94,7 +94,7 @@ app.get("/form_add_student_for_group/:id", (req, response) =>{
   }
 
   const id_group = req.params.id;
-  const sql_find_students = "SELECT * FROM students";
+  const sql_find_students = "SELECT * FROM students, study_groups WHERE students.id_group=study_groups.id_group AND study_groups.type_group = 'disactive'";
 
   connection.query(sql_find_students, [id_group], (err, data) =>{
     if(err){ 
@@ -151,7 +151,7 @@ app.get("/delete_students_group/:id", (req, response) =>{
 
   const id_student = req.params.id;
     
-  const sql_find_groups = "UPDATE students SET id_group = NULL WHERE id_student=?";
+  const sql_find_groups = "UPDATE students SET id_group = (SELECT id_group FROM study_groups WHERE name_group = 'NOT ACTIVE') WHERE id_student=?";
   connection.query(sql_find_groups, [id_student], (err, data) =>{
     if(err){ 
       console.log(err);
@@ -201,7 +201,7 @@ app.post("/form_add_group", upload.none(), (req, response) =>{
     return response.status(200).json({ message: "У вас нет досутпа" })
   }
 
-  const sql_add_group = "INSERT INTO study_groups (name_group, description_group) VALUES(?, ?)";
+  const sql_add_group = "INSERT INTO study_groups (name_group, description_group, type_group) VALUES(?, ?, ?)";
 
   if(!req.body){
     return response.status(400).send();
@@ -255,11 +255,12 @@ app.post("/form_edit_group", upload.none(), (req, response) =>{
   }
 
   const obj_data = req.body;
-  const sql_update_group = "UPDATE study_groups SET name_group=?, description_group=? WHERE id_group=?";
+  const sql_update_group = "UPDATE study_groups SET name_group=?, description_group=?, type_group=? WHERE id_group=?";
 
   let data_value = [
     obj_data.name_group, 
-    obj_data.description_group, 
+    obj_data.description_group,
+    obj_data.type_group, 
     obj_data.id_group, 
   ];
 
@@ -309,9 +310,10 @@ app.get("/students", (req, response) =>{
   }
     
   const sql_find_groups = `
-  SELECT students.id_student, students.firstName, students.middleName, students.lastName, 
-    IF(students.id_group IS NOT NULL, study_groups.name_group, "Группы нет") AS name_group 
-  FROM students LEFT JOIN study_groups ON students.id_group = study_groups.id_group;`;
+  SELECT students.id_student, students.firstName, students.middleName, students.lastName, study_groups.name_group 
+  FROM students, study_groups 
+  WHERE students.id_group = study_groups.id_group;
+  `;
   connection.query(sql_find_groups, (err, data) =>{
     if(err){ 
       console.log(err);
@@ -344,7 +346,10 @@ app.post("/form_add_student", upload.none(), (req, response) =>{
     return response.status(200).json({ message: "У вас нет досутпа" })
   }
 
-  const sql_add_student = "INSERT INTO students (id_student, firstName, middleName, lastName, id_group) VALUES(?, ?, ?, ?, NULL)";
+  const sql_add_student = `
+  INSERT INTO students 
+  (id_student, firstName, middleName, lastName, id_group)
+  VALUES (?, ?, ?, ?, (SELECT id_group FROM study_groups WHERE name_group = 'NOT ACTIVE'))`;
 
   if(!req.body){
     return response.status(400).send();
@@ -1179,24 +1184,27 @@ app.get("/available_benefits/:id", (req, response) =>{
   const id_student = req.params.id;
 
   const sql_find_all_available_benefits_for_student  = `
-  SELECT benefits.id_benefits, benefits.name_ben, MAX(category.rank_category) as rank_category
-  FROM students_category
-  JOIN category ON students_category.id_category = category.id_category
-  JOIN category_benefits ON category.id_category = category_benefits.id_category 
-  JOIN benefits ON category_benefits.id_benefits = benefits.id_benefits 
-  LEFT JOIN use_benefits ON benefits.id_benefits = use_benefits.id_benefits 
+    SELECT benefits.id_benefits, benefits.name_ben, MAX(category.rank_category) as rank_category
+    FROM students_category
+    JOIN category ON students_category.id_category = category.id_category
+    JOIN category_benefits ON category.id_category = category_benefits.id_category 
+    JOIN benefits ON category_benefits.id_benefits = benefits.id_benefits 
+    LEFT JOIN use_benefits ON benefits.id_benefits = use_benefits.id_benefits 
       AND CAST(use_benefits.date_use AS DATE) = CAST(NOW() AS DATE) 
-      AND use_benefits.id_student = 100
-  WHERE students_category.id_student = 100 
-  AND benefits.first_time < "11:00:00" 
-  AND benefits.last_time > "11:00:00" 
-  AND benefits.data_begin < NOW() 
-  AND benefits.data_end > NOW() 
-  AND use_benefits.id_benefits IS NULL
-  GROUP BY benefits.id_benefits, benefits.name_ben;
+      AND use_benefits.id_student = ?
+    JOIN students ON students_category.id_student = students.id_student
+    JOIN study_groups ON students.id_group = study_groups.id_group
+    WHERE students_category.id_student = ? 
+      AND benefits.first_time < "11:00:00" 
+      AND benefits.last_time > "11:00:00" 
+      AND benefits.data_begin < NOW() 
+      AND benefits.data_end > NOW() 
+      AND use_benefits.id_benefits IS NULL
+      AND study_groups.type_group != "disactive"
+    GROUP BY benefits.id_benefits, benefits.name_ben;
   `;
 
-  connection.query(sql_find_all_available_benefits_for_student, [id_student], (err, data) =>{
+  connection.query(sql_find_all_available_benefits_for_student, [id_student, id_student], (err, data) =>{
     if(err){
       console.log(err);
       return response.status(400).json({ message: "Ошибка с БД" });
@@ -1225,11 +1233,13 @@ app.post("/use_benefits", upload.none(), (req, response)=>{
   }
 
   const obj_data = req.body;
-  const sql_add_use_benefits = "INSERT INTO use_benefits(id_student, id_category, id_benefits, date_use) VALUES(?, ?, ?, NOW())";
+  const sql_add_use_benefits = `INSERT INTO use_benefits(id_student, name_group, id_category, id_benefits, date_use) 
+  VALUES(?, (SELECT study_groups.name_group FROM students, study_groups WHERE students.id_group = study_groups.id_group AND students.id_student = ?), ?, ?, NOW())`;
 
   const id_category_and_id_benefits = obj_data.id_benefits.split("_");
 
   const data_value = [
+    obj_data.id_student,
     obj_data.id_student,
     id_category_and_id_benefits[1],
     id_category_and_id_benefits[0]
