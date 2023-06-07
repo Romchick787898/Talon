@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {secret} = require("./config");
 const cookieParser = require('cookie-parser');
-const { response } = require("express");
 
 const app = express();
 
@@ -1251,6 +1250,30 @@ app.post("/use_benefits", upload.none(), (req, response)=>{
       return response.status(400).json({ message: "Ошибка с БД" });
     }
     response.status(200).json({ message: "Льгота Использована" });
+  });
+})
+
+/* Получение отчетов */
+
+app.get("/report", (req, response)=>{
+
+  const has_role = Valide_role(req, ["ADMIN"]);
+
+  if(!has_role){ // Если ошибка
+    return response.status(200).json({ message: "У вас нет досутпа" })
+  }
+
+  const sql_find_reports = "SELECT DATE_FORMAT(use_benefits.date_use, '%Y-%m-%d %H:%i:%S') date_use, use_benefits.name_group, category.name_cat, benefits.name_ben, use_benefits.id_student FROM use_benefits, category, benefits WHERE category.id_category = use_benefits.id_category AND benefits.id_benefits = use_benefits.id_benefits";
+
+  connection.query(sql_find_reports, (err, data) =>{
+    if(err){ 
+      console.log(err);
+      return response.status(400).json({ message: "Ошибка БД" });
+    }else{
+      response.render("reports.hbs", { 
+        reports: data,
+      });
+    }
   });
 })
 
